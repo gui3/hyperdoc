@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyditor</title>
+    <style>
+/* GENERAL */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.hidden {
+    display: none;
+    height: 0;
+    width: 0;
+}
+
+html, body, main {
+    height: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+button {
+    border: 1px solid #7779;
+    border-radius: 0.4rem;
+    background: none;
+    margin: 0.2rem 0;
+}
+button:active {
+    background: #7777;
+}
+
+ul.nostyle {
+    list-style: none;
+}
+
+/* MODALS */
+
+section.modal.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #7777;
+}
+
+section.modal.window {
+    margin: auto;
+    margin-top: 2rem;
+    padding: 1em;
+    max-height: 80%;
+    max-width: 80%;
+    border: 2px solid #5557;
+    background: #fff;
+}
+
+section.modal.window ul.buttons {
+    width: 100%
+}
+section.modal.window ul.buttons button {
+    width: 100%;
+    height: 2em;
+}
+
+/* HEADER */
+
+header {
+    flex: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem;
+    border-bottom: 0.5em solid #d08;
+}
+
+header h1 {
+    font-size: 1.5em;
+}
+
+ul.toolbar {
+    display: flex;
+}
+
+.toolbar button {
+    width: 1.7rem;
+    height: 1.7rem;
+    font-size: 1.2rem;
+}
+
+/* EDITOR */
+
+section.editor {
+    flex: 1;
+    overflow: auto;
+}
+
+section.editor button.additem {
+    height: 3em;
+    width: 100%;
+}
+
+/* hdoc */
+
+.editor table {
+    border-collapse: collapse;
+    border: 2px solid #5557;
+}
+.editor table td,
+.editor table th {
+    border: 1px solid #7777;
+}
+
+.hdoc.item {
+    padding: 0.5em;
+    margin: 0.5em;
+    outline: 1px dotted #5555;
+}
+.hdoc.item:hover {
+    outline: 2px solid #fc0;
+}
+.hdoc.item:focus {
+    outline: 2px solid #d08;
+}
+
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Hyditor</h1>
+            <ul class="toolbar nostyle">
+                <li>
+                    <button>
+                        &#x271a;
+                    </button>
+                </li>
+                <li>
+                    <button>
+                        &#x1d578;
+                    </button>
+                </li>
+            </ul>
+        </header>
+        <section class="editor">
+            <div class="hdoc root">
+
+            </div>
+            <button class="additem">&#x271a;</button>
+        </section>
+    </main>
+
+    <section class="modal container hidden">
+        <section class = "modal window additem hidden">
+            <p>Add an Item:</p>
+            <ul class="buttons nostyle">
+                <li>
+                    <button class="addtext">
+                        Text
+                    </button>
+                </li>
+                <li>
+                    <button class="addgrid">
+                        Grid
+                    </button>
+                </li>
+                <li>
+                    <button class="adddraw">
+                        Draw
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </section>
+</body>
+<script>
+
+// hypertext classes
+
+class TextItem {
+    constructor () {
+        this.htmlElement = document
+        .createElement('div')
+
+        this.htmlElement.contentEditable = true;
+        this.htmlElement.classList.add('hdoc')
+        this.htmlElement.classList.add('item')
+    }
+}
+
+
+// editor ----------------------------
+
+function quitModal () {
+    const modalContainer = document
+    .querySelector('section.modal.container')
+
+    const children = modalContainer.children
+    for (let i = 0; i < children.length; i++) {
+        const child = children[i]
+        if (!child.classList.contains('hidden')) {
+            child.classList.add('hidden')
+        }
+    }
+
+    modalContainer.classList.add('hidden')
+}
+
+function showModal(modalWindow) {
+    const modalContainer = document
+    .querySelector('section.modal.container')
+
+    modalContainer.addEventListener('click', function (evt) {
+        quitModal()
+    })
+
+    modalWindow.addEventListener('click', function (evt) {
+        evt.stopPropagation();
+    })
+    
+    modalWindow.classList.remove('hidden')
+    modalContainer.classList.remove('hidden')
+}
+
+function addItemAtBottom (item) {
+    document.querySelector('div.hdoc.root')
+    .appendChild(item.htmlElement)
+}
+
+document.querySelector('section.editor button.additem')
+.addEventListener('click', function (evt) {
+    showModal(document.querySelector("section.additem.modal"))
+})
+
+document.querySelector('section.additem.modal button.addtext')
+.addEventListener('click', function (evt) {
+    const item = new TextItem()
+    addItemAtBottom(item)
+    quitModal()
+})
+
+</script>
+</html>

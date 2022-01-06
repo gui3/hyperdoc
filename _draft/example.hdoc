@@ -1,0 +1,27 @@
+{hyperdoc v: 0.0.1 charset: utf-8}
+
+{title}this is hyperdoc{/title}
+a document format strongly inspired by html,
+but aiming at providing modular documents.
+
+document version: {= DOC.v}
+
+{h2}similarities with html{/h2}
+
+you can use {@ href: https://someplace.org}links{/@}
+and some of the {strong}common{/strong} html tags
+
+
+
+{h2}particularities{/h2}
+
+you can use {# keywords}
+and associate them with a value :
+{# PI:3.1415}
+
+
+{grid}
+
+
+{/grid}
+
