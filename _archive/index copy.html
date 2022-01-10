@@ -12,7 +12,12 @@
     margin: 0;
     padding: 0;
     font-family:'Courier New', Courier, monospace;
-    position: relative;
+}
+
+.hidden {
+    display: none;
+    height: 0;
+    width: 0;
 }
 
 html, body, main {
@@ -29,9 +34,8 @@ main {
 button {
     border: 1px solid #7779;
     border-radius: 0.4rem;
-    background: #fff;
+    background: none;
     margin: 0.2rem 0;
-    padding: 0.2rem;
 }
 button:active {
     background: #7777;
@@ -39,29 +43,6 @@ button:active {
 
 ul.nostyle {
     list-style: none;
-}
-
-.hidden {
-    display: none;
-    height: 0;
-    width: 0;
-}
-
-.flex.row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.flex.col {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.flex.space-between{
-    justify-content: space-between;
 }
 
 /* MODALS */
@@ -97,6 +78,9 @@ section.modal.window ul.buttons button {
 
 header {
     flex: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 0.2rem;
     border-bottom: 0.5em solid #d08;
 }
@@ -105,21 +89,14 @@ header h1 {
     font-size: 1.5em;
 }
 
-.-toolbar button {
+ul.toolbar {
+    display: flex;
+}
+
+.toolbar button {
     width: 1.7rem;
     height: 1.7rem;
     font-size: 1.2rem;
-}
-
-.taskbar.volatile .taskbar {
-    -border-top: 1px solid #d08;
-    background: #aaa2;
-}
-
-.taskbar .name {
-    position: absolute;
-    margin-top: -0.5em;
-    z-index: 2;
 }
 
 /* EDITOR */
@@ -146,8 +123,8 @@ section.editor button.additem {
 }
 
 .hdoc.item {
-    padding: 0.2em;
-    margin: 0.2em;
+    padding: 0.5em;
+    margin: 0.5em;
     outline: 1px dotted #5555;
 }
 .hdoc.item:hover {
@@ -162,46 +139,22 @@ section.editor button.additem {
 <body>
     <main class="container">
         <header>
-            <section class="taskbar permanent flex row space-between">
-                <h1>Hyditor</h1>
-                <ul class="toolbar nostyle flex row">
-                    <li>
-                        <button class="tasks insert">
-                            &#x271a;
-                        </button>
-                    </li>
-                    <li>
-                        <button class="tasks format">
-                            &#x1d578;
-                        </button>
-                    </li>
-                </ul>
-            </section>
-            <section class="taskbar volatile">
-                <section class="taskbar additem">
-                    <p class="name">Insert:</p>
-                    <ul class="toolbar nostyle flex row">
-                        <li>
-                            <button class="task additem text">
-                                Text
-                            </button>
-                        </li>
-                        <li>
-                            <button class="task additem grid">
-                                Grid
-                            </button>
-                        </li>
-                        <li>
-                            <button class="task additem draw">
-                                Draw
-                            </button>
-                        </li>
-                    </ul>
-                </section>
-            </section>
+            <h1>Hyditor</h1>
+            <ul class="toolbar nostyle">
+                <li>
+                    <button>
+                        &#x271a;
+                    </button>
+                </li>
+                <li>
+                    <button>
+                        &#x1d578;
+                    </button>
+                </li>
+            </ul>
         </header>
         <section class="editor">
-            <div class="hdoc item root">
+            <div class="hdoc root">
 
             </div>
             <button class="additem">&#x271a;</button>
@@ -210,6 +163,24 @@ section.editor button.additem {
 
     <section class="modal container hidden">
         <section class = "modal window additem hidden">
+            <p>Add an Item:</p>
+            <ul class="buttons nostyle">
+                <li>
+                    <button class="addtext">
+                        Text
+                    </button>
+                </li>
+                <li>
+                    <button class="addgrid">
+                        Grid
+                    </button>
+                </li>
+                <li>
+                    <button class="adddraw">
+                        Draw
+                    </button>
+                </li>
+            </ul>
         </section>
     </section>
 </body>
@@ -262,36 +233,21 @@ function showModal(modalWindow) {
     modalContainer.classList.remove('hidden')
 }
 
-function toggleTaskBar (taskbar) {
-    const taskContainer = document
-    .querySelector('section.taskbar.volatile')
-
-    const children = taskContainer.children
-
-    for (let i = 0; i < children.length; i++) {
-        const child = children[i]
-
-        if (!child.classList.contains('hidden')) {
-            child.classList.add('hidden')
-        }
-    }
-}
-
 function addItemAtBottom (item) {
     document.querySelector('div.hdoc.root')
     .appendChild(item.htmlElement)
 }
 
-document.querySelector('button.tasks.insert')
+document.querySelector('section.editor button.additem')
 .addEventListener('click', function (evt) {
-    toggleTaskBar(document.querySelector(".taskbar.additem"))
+    showModal(document.querySelector("section.additem.modal"))
 })
 
-document.querySelector('button.additem.text')
+document.querySelector('section.additem.modal button.addtext')
 .addEventListener('click', function (evt) {
     const item = new TextItem()
     addItemAtBottom(item)
-    //quitModal()
+    quitModal()
 })
 
 </script>
