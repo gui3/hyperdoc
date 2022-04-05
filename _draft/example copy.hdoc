@@ -1,0 +1,39 @@
+{!hyperdoc}
+{!meta
+appversion= 0.0.1
+charset= utf-8
+docversion= 0
+lastupdate= 2022-04-04T17:08:25.953Z
+}
+
+{>}Main document {doc}
+
+this is the root document
+
+{>} My first item {}
+this part is an independent section of the document
+{/}
+
+{>} My first section {}
+
+{>} Myfirst subsection {}
+title levels adapt to nesting
+
+
+{>} Todo {list}
+{checkbox =1}learn hyperdoc{/checkbox}
+{checkbox}
+{:fireworks} enjoy!
+{/checkbox} 
+{/list}
+
+{>} A table {table}
+
+
+
+{/table}
+
+{/list}
+{/} {* first section}
+
+{/doc}

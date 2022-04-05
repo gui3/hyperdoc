@@ -1,0 +1,23 @@
+{
+  "name": "hyperdoc",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup --config",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gui3/hyperdoc.git"
+  },
+  "author": "gui3",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/gui3/hyperdoc/issues"
+  },
+  "homepage": "https://github.com/gui3/hyperdoc#readme",
+  "devDependencies": {
+    "rollup": "^2.70.1"
+  }
+}
